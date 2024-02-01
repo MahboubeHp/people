@@ -38,9 +38,15 @@
 
 /* Author: Caroline Pantofaru */
 
-#include "face_detector/faces.h"
+#include <face_detector/faces.h>
 #include <cfloat>
 #include <algorithm>
+#include <iostream>
+
+#include <ros/time.h>
+#include <ros/console.h>
+#include <opencv2/imgproc/imgproc_c.h>
+
 
 namespace people
 {
@@ -171,7 +177,8 @@ void Faces::faceDetectionThreadDisparity(uint i)
     int this_min_face_size = (int)(floor(fabs(p2_2.x - p2_1.x)));
 
     std::vector<cv::Rect> faces_vec;
-    cascade_.detectMultiScale(cv_image_gray_, faces_vec,  1.2, 2, CV_HAAR_DO_CANNY_PRUNING, cv::Size(this_min_face_size, this_min_face_size));
+    cascade_.detectMultiScale(cv_image_gray_, faces_vec,  1.2, 2, cv::CASCADE_DO_CANNY_PRUNING,
+                              cv::Size(this_min_face_size, this_min_face_size));
 
     // Filter the faces using depth information, if available. Currently checks that the actual face size is within the given limits.
     cv::Scalar color(0, 255, 0);
@@ -338,7 +345,8 @@ void Faces::faceDetectionThreadDepth(uint i)
     int this_min_face_size = (int)(floor(fabs(p2_2.x - p2_1.x)));
 
     std::vector<cv::Rect> faces_vec;
-    cascade_.detectMultiScale(cv_image_gray_, faces_vec,  1.2, 2, CV_HAAR_DO_CANNY_PRUNING, cv::Size(this_min_face_size, this_min_face_size));
+    cascade_.detectMultiScale(cv_image_gray_, faces_vec,  1.2, 2, cv::CASCADE_DO_CANNY_PRUNING,
+                              cv::Size(this_min_face_size, this_min_face_size));
 
     // Filter the faces using depth information, if available. Currently checks that the actual face size is within the given limits.
     cv::Scalar color(0, 255, 0);
