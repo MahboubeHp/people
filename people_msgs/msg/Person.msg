@@ -4,4 +4,5 @@ geometry_msgs/Point velocity
 float64             reliability
 string[]            tagnames
 string[]            tags
+float64 		mob_id
 
